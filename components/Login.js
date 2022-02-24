@@ -7,7 +7,7 @@ function Login() {
   const [showPass, setShowPass] = useState(false);
 
   return (
-    <div className="h-[425px] w-full flex flex-col">
+    <div className="h-full w-full flex flex-col">
       <div className="w-full flex text-2xl items-center mb-8">
         <Link href={'/'}>
           <a className="pr-4 py-2 text-center -ml-2">
