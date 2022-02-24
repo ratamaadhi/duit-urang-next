@@ -2,33 +2,42 @@ import { HiOutlineMenu } from "react-icons/hi";
 import { BiMoon, BiSun } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { Switch } from "@headlessui/react";
+import ModalBottom from "./ModalBottom";
+import Link from "next/link";
 
 function Navbar() {
   const [enabled, setEnabled] = useState(false);
+  const [isOpen, setIsopen] = useState(false);
 
   useEffect(() => {
-    const theme = localStorage.getItem('theme')
-    if(theme == "dark"){
-      setEnabled(true)
+    const theme = localStorage.getItem("theme");
+    if (theme == "dark") {
+      setEnabled(true);
     }
-  },[])
+  }, []);
 
-  function setTheme(){
-    if(!enabled){
-      localStorage.setItem('theme', "dark")
-      document.querySelector("html").classList.add('dark');
-      document.querySelector("html").classList.remove('light');
-    }else{
-      localStorage.setItem('theme', "light")
-      document.querySelector("html").classList.add('light');
-      document.querySelector("html").classList.remove('dark');
+  function setTheme() {
+    if (!enabled) {
+      localStorage.setItem("theme", "dark");
+      document.querySelector("html").classList.add("dark");
+      document.querySelector("html").classList.remove("light");
+    } else {
+      localStorage.setItem("theme", "light");
+      document.querySelector("html").classList.add("light");
+      document.querySelector("html").classList.remove("dark");
     }
-    setEnabled(!enabled)
+    setEnabled(!enabled);
   }
 
   return (
     <div className="w-full h-12 px-4 flex justify-between items-center font-poppins border-b border-opacity-25 border-violet-400">
-      <div className="text-base font-bold tracking-wide">Duit Urang</div>
+      <ModalBottom isOpen={isOpen} closeModal={() => setIsopen(false)} closeButton={true}>
+        <p>
+          Your payment has been successfully submitted. We’ve sent you an email
+          with all of the details of your order.
+        </p>
+      </ModalBottom>
+      <Link href={'/'}><a className="text-base font-bold tracking-wide">Duit Urang</a></Link>
       <div className="flex items-center space-x-4">
         <div>
           <Switch
@@ -50,7 +59,7 @@ function Navbar() {
             </span>
           </Switch>
         </div>
-        <div className="p-1 text-2xl">
+        <div className="p-1 text-2xl" onClick={() => setIsopen(true)}>
           <HiOutlineMenu />
         </div>
       </div>
