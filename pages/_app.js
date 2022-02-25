@@ -2,6 +2,8 @@ import Head from "next/head";
 import { useEffect } from "react";
 import { AuthContextProvider } from "../context/AuthContext";
 import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -21,6 +23,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <AuthContextProvider>
         <Component {...pageProps} />
+        <ToastContainer />
       </AuthContextProvider>
     </>
   );

@@ -1,46 +1,79 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { HiChevronLeft } from "react-icons/hi";
 import { useSignup } from "../hooks/useSignup";
 import ModalBottom from "./ModalBottom";
+import { toast, Slide } from "react-toastify";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function Signup() {
+  const router = useRouter();
   const [showPass, setShowPass] = useState(false);
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
-  const [errForm, setErrForm] = useState(null);
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const { signup, error: errSignup, isLoading, isSuccess } = useSignup();
+  const { theme } = useAuthContext();
 
   function handleSignup(e) {
     e.preventDefault();
-    setErrForm(null);
     if (confPassword !== password) {
-      return setErrForm("konfirmasi password tidak sama");
+      toast.warn("konfirmasi password tidak sama", {
+        position: "bottom-center",
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Slide,
+        theme: theme,
+        autoClose: false,
+      });
     }
     signup(email, password, fullName);
   }
 
   useEffect(() => {
-    if (isSuccess){
-      setIsOpen(true)
-      setEmail('')
-      setFullName('')
-      setPassword('')
-      setConfPassword('')
-      setShowPass(false)
-    };
+    if (isSuccess) {
+      // setIsOpen(true);
+      setEmail("");
+      setFullName("");
+      setPassword("");
+      setConfPassword("");
+      setShowPass(false);
+      toast.success("Sign up berhasil daks, log in keun.", {
+        position: "bottom-center",
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Slide,
+        theme: theme,
+        autoClose: 3000,
+      });
+      router.replace("/login");
+    }
+
+    if (errSignup) {
+      toast.error("Sign up gagal cobaan deui.", {
+        position: "bottom-center",
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Slide,
+        theme: theme,
+        autoClose: false,
+      });
+    }
 
     return () => {};
-  }, [isSuccess]);
+  }, [isSuccess, errSignup]);
 
   return (
     <div className="h-full w-full flex flex-col pb-8">
       <ModalBottom isOpen={isOpen} closeModal={() => setIsOpen(false)}>
-        <p>Sign up berhasil daks</p>
+        <p>Sign up berhasil daks, log in keun.</p>
       </ModalBottom>
       <div className="w-full flex text-2xl items-center mb-8">
         <Link href={"/login"}>
@@ -57,64 +90,48 @@ function Signup() {
             type={"text"}
             required
             placeholder="Full Name"
-            className={`px-4 py-3 peer w-full text-xs leading-relaxed tracking-wide border rounded-xl border-violet-300 dark:border-neutral-600 dark:bg-neutral-800 dark:focus:bg-neutral-700 shadow-sm bg-violet-100 focus:bg-violet-200 focus:outline-none focus:ring-0 focus:border-violet-900 dark:focus:border-violet-300 placeholder:text-transparent ${
-              isLoading && "text-violet-400"
-            }`}
+            className={`input-theme peer ${isLoading && "text-violet-400"}`}
             disabled={isLoading}
             onChange={(e) => setFullName(e.target.value)}
             value={fullName}
           />
-          <label className="absolute left-0 -top-6 text-sm text-violet-900 dark:text-violet-300 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-violet-400 dark:peer-placeholder-shown:text-neutral-600 peer-focus:-top-6 peer-focus:left-0 peer-focus:text-violet-900 dark:peer-focus:text-violet-300 peer-focus:text-sm">
-            Full Name
-          </label>
+          <label className="label-theme">Full Name</label>
         </div>
         <div className="relative mb-1 mt-8">
           <input
             type={"email"}
             required
             placeholder="Email"
-            className={`px-4 py-3 peer w-full text-xs leading-relaxed tracking-wide border rounded-xl border-violet-300 dark:border-neutral-600 dark:bg-neutral-800 dark:focus:bg-neutral-700 shadow-sm bg-violet-100 focus:bg-violet-200 focus:outline-none focus:ring-0 focus:border-violet-900 dark:focus:border-violet-300 placeholder:text-transparent ${
-              isLoading && "text-violet-400"
-            }`}
+            className={`input-theme peer ${isLoading && "text-violet-400"}`}
             disabled={isLoading}
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
-          <label className="absolute left-0 -top-6 text-sm text-violet-900 dark:text-violet-300 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-violet-400 dark:peer-placeholder-shown:text-neutral-600 peer-focus:-top-6 peer-focus:left-0 peer-focus:text-violet-900 dark:peer-focus:text-violet-300 peer-focus:text-sm">
-            Email
-          </label>
+          <label className="label-theme">Email</label>
         </div>
         <div className="relative mb-1 mt-10">
           <input
             type={showPass ? "text" : "password"}
             required
             placeholder="Set Password"
-            className={`px-4 py-3 peer w-full text-xs leading-relaxed tracking-wide border rounded-xl border-violet-300 dark:border-neutral-600 dark:bg-neutral-800 dark:focus:bg-neutral-700 shadow-sm bg-violet-100 focus:bg-violet-200 focus:outline-none focus:ring-0 focus:border-violet-900 dark:focus:border-violet-300 placeholder:text-transparent ${
-              isLoading && "text-violet-400"
-            }`}
+            className={`input-theme peer ${isLoading && "text-violet-400"}`}
             disabled={isLoading}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          <label className="absolute left-0 -top-6 text-sm text-violet-900 dark:text-violet-300 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-violet-400 dark:peer-placeholder-shown:text-neutral-600 peer-focus:-top-6 peer-focus:left-0 peer-focus:text-violet-900 dark:peer-focus:text-violet-300 peer-focus:text-sm">
-            Set Password
-          </label>
+          <label className="label-theme">Set Password</label>
         </div>
         <div className="relative mb-1 mt-10">
           <input
             type={showPass ? "text" : "password"}
             required
             placeholder="Konfirmasi Password"
-            className={`px-4 py-3 peer w-full text-xs leading-relaxed tracking-wide border rounded-xl border-violet-300 dark:border-neutral-600 dark:bg-neutral-800 dark:focus:bg-neutral-700 shadow-sm bg-violet-100 focus:bg-violet-200 focus:outline-none focus:ring-0 focus:border-violet-900 dark:focus:border-violet-300 placeholder:text-transparent ${
-              isLoading && "text-violet-400"
-            }`}
+            className={`input-theme peer ${isLoading && "text-violet-400"}`}
             disabled={isLoading}
             onChange={(e) => setConfPassword(e.target.value)}
             value={confPassword}
           />
-          <label className="absolute left-0 -top-6 text-sm text-violet-900 dark:text-violet-300 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-violet-400 dark:peer-placeholder-shown:text-neutral-600 peer-focus:-top-6 peer-focus:left-0 peer-focus:text-violet-900 dark:peer-focus:text-violet-300 peer-focus:text-sm">
-            Konfirmasi Password
-          </label>
+          <label className="label-theme">Konfirmasi Password</label>
         </div>
         <div className="relative mb-1 mt-4 flex items-center space-x-2">
           <input
@@ -139,8 +156,6 @@ function Signup() {
             <a className="underline">Log in</a>
           </Link>
         </div>
-        {errSignup && <p>{errSignup}</p>}
-        {errForm && <p>{errForm}</p>}
       </form>
     </div>
   );
