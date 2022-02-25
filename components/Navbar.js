@@ -6,11 +6,13 @@ import ModalBottom from "./ModalBottom";
 import Link from "next/link";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { SET_THEME } from "../context/AuthConst";
+import { useLogout } from "../hooks/useLogout";
 
 function Navbar() {
   const [enabled, setEnabled] = useState(false);
   const [isOpen, setIsopen] = useState(false);
-  const { theme, dispatch } = useAuthContext();
+  const { user, theme, dispatch } = useAuthContext();
+  const { logout } = useLogout();
 
   useEffect(() => {
     if (theme == "dark") {
@@ -33,17 +35,21 @@ function Navbar() {
     setEnabled(!enabled);
   }
 
+  function handleLogout(){
+    logout()
+  }
   return (
-    <div className="w-full h-12 px-4 flex justify-between items-center font-poppins border-b border-opacity-25 border-violet-400">
+    <div className="w-full h-12 px-4 flex justify-between items-center font-poppins border-b border-violet-400/25">
       <ModalBottom
         isOpen={isOpen}
         closeModal={() => setIsopen(false)}
         closeButton={true}
       >
-        <p>
-          Your payment has been successfully submitted. We’ve sent you an email
-          with all of the details of your order.
-        </p>
+        <button className="w-full py-2 text-center border-t border-b border-violet-400/25 hover:text-violet-200 focus:outline-none focus-visible:ring-0"
+          onClick={handleLogout}
+        >
+          Log out
+        </button>
       </ModalBottom>
       <Link href={"/"}>
         <a className="text-base font-bold tracking-wide">Duit Urang</a>
@@ -69,9 +75,11 @@ function Navbar() {
             </span>
           </Switch>
         </div>
-        <div className="p-1 text-2xl" onClick={() => setIsopen(true)}>
-          <HiOutlineMenu />
-        </div>
+        {user && (
+          <div className="p-1 text-2xl" onClick={() => setIsopen(true)}>
+            <HiOutlineMenu />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { HiChevronLeft } from "react-icons/hi";
 import { Slide, toast } from "react-toastify";
@@ -6,6 +7,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogin } from "../hooks/useLogin";
 
 function Login() {
+  const router = useRouter();
   const [showPass, setShowPass] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,9 +21,10 @@ function Login() {
 
   useEffect(() => {
     if (isSuccess) {
+      router.replace("/");
     }
     if (error) {
-      toast.error("Error daks, log in keun deui.", {
+      toast.warn("gagal daks, log in keun deui.", {
         position: "bottom-center",
         closeOnClick: true,
         pauseOnHover: true,
@@ -53,6 +56,7 @@ function Login() {
             className={`input-theme peer ${isLoading && "text-violet-400"}`}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={isLoading}
           />
           <label className="label-theme">Email</label>
         </div>
@@ -64,6 +68,7 @@ function Login() {
             className={`input-theme peer ${isLoading && "text-violet-400"}`}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={isLoading}
           />
           <label className="label-theme">Password</label>
         </div>
@@ -77,8 +82,11 @@ function Login() {
           <label className="text-xs">Lihat Password</label>
         </div>
         <div className="relative mb-1 mt-10">
-          <button className="w-full px-4 py-2 rounded-xl bg-violet-300 shadow-xl shadow-violet-200 dark:shadow-neutral-900 text-violet-900 border border-transparent hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
-            Log in
+          <button
+            className="w-full px-4 py-2 rounded-xl bg-violet-300 shadow-xl shadow-violet-200 dark:shadow-neutral-900 text-violet-900 border border-transparent hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Log in"}
           </button>
         </div>
         <div className="relative mb-1 mt-4 text-center text-xs">
