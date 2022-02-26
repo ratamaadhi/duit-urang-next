@@ -38,7 +38,7 @@ function Navbar() {
   }
 
   function handleLogout(){
-    logout()
+    logout(() => setIsopen(false))
   }
   return (
     <div className="w-full h-12 px-4 flex justify-between items-center font-poppins border-b border-violet-400/25">

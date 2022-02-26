@@ -24,7 +24,7 @@ function useCollection(name, _query) {
     });
 
     return () => unsub();
-  }, [name, q]);
+  }, [name, _query]);
 
   return { documents };
 }

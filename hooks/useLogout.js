@@ -5,11 +5,12 @@ import { LOGOUT } from "../context/AuthConst";
 
 export function useLogout() {
   const { dispatch } = useAuthContext();
-  function logout() {
+  function logout(callback) {
     signOut(auth)
       .then(() => {
         dispatch({ type: LOGOUT });
         console.log('user sign out')
+        callback()
       })
       .catch((err) => {
         console.log(err);
