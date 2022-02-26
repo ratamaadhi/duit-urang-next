@@ -34,6 +34,7 @@ function Login() {
         autoClose: 3500,
       });
     }
+    return () => {};
   }, [isSuccess, error]);
 
   return (

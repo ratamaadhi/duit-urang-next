@@ -18,6 +18,8 @@ function Navbar() {
     if (theme == "dark") {
       setEnabled(true);
     }
+
+    return () => {}
   }, []);
 
   function setTheme() {

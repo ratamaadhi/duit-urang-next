@@ -13,6 +13,7 @@ function LoginPage() {
     } else if (user == null) {
       console.log("signed in please!");
     }
+    // return () => {};
   }, [user]);
 
   if (user) {

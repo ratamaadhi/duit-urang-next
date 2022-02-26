@@ -22,7 +22,7 @@ function Signup() {
   function handleSignup(e) {
     e.preventDefault();
     if (confPassword !== password) {
-      toast.warn("konfirmasi password tidak sama", {
+      return toast.warn("konfirmasi password tidak sama", {
         position: "bottom-center",
         closeOnClick: true,
         pauseOnHover: true,

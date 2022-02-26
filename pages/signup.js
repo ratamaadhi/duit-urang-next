@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react'
-import Layout from '../components/Layout'
-import Signup from '../components/Signup'
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import Layout from "../components/Layout";
+import Signup from "../components/Signup";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function SignupPage() {
   const router = useRouter();
@@ -13,6 +13,7 @@ function SignupPage() {
     } else if (user == null) {
       console.log("signed in!");
     }
+    // return () => {};
   }, [user]);
 
   if (user) {
@@ -24,7 +25,7 @@ function SignupPage() {
     <Layout>
       <Signup />
     </Layout>
-  )
+  );
 }
 
-export default SignupPage
+export default SignupPage;
