@@ -5,7 +5,7 @@ import BottomNav from "./BottomNav";
 function Layout({ children }) {
   const { authIsReady, user } = useAuthContext();
   return (
-    <div className="antialiased max-w-md mx-auto h-full min-h-screen bg-violet-100 dark:bg-neutral-800 text-violet-900 dark:text-violet-300">
+    <div className="relative antialiased max-w-md mx-auto h-full min-h-screen bg-violet-100 dark:bg-neutral-800 text-violet-900 dark:text-violet-300">
       {authIsReady && (
         <>
           <Navbar />
