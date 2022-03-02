@@ -15,9 +15,10 @@ export function useFirestore(collectionName) {
 
   // only dispatch is not canceled
   const dispatchIfNotCancelled = (action) => {
-    if (isCancelled) {
-      dispatch({ action });
+    if (!isCancelled) {
+      dispatch(action);
     }
+    return dispatch;
   };
 
   // add a document
@@ -25,8 +26,9 @@ export function useFirestore(collectionName) {
     dispatch({ type: "IS_PENDING" });
 
     try {
-      const createdAt = timestamp.fromDate(new Date())
-      const addedDocument = await addDoc(ref, {...doc, createdAt});
+      const createdAt = timestamp.fromDate(new Date());
+      const addedDocument = await addDoc(ref, { ...doc, createdAt });
+      console.log("addedDocument", addedDocument);
       dispatchIfNotCancelled({
         type: "ADDED_DOCUMENT",
         payload: addedDocument,
@@ -40,7 +42,7 @@ export function useFirestore(collectionName) {
   const deleteDocument = () => {};
 
   useEffect(() => {
-    return () => setCancelled(false);
+    return () => setCancelled(true);
   }, []);
 
   return { addDocument, deleteDocument, response };

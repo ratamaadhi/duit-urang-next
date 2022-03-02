@@ -57,13 +57,13 @@ function ModalBottom({
               </div>
 
               {closeButton && (
-                <div className="mt-4 flex w-full justify-end">
+                <div className="mt-4 flex w-full justify-center">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-2 py-1 text-xs font-medium text-violet-900 bg-violet-200 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    className="inline-flex w-40 justify-center px-2 py-1 text-xs font-medium text-violet-900 bg-violet-200 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                     onClick={closeModal}
                   >
-                    <HiChevronDown />
+                    <HiChevronDown size={16} />
                   </button>
                 </div>
               )}

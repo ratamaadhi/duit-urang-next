@@ -22,7 +22,9 @@ export const AuthContextProvider = ({ children }) => {
     dispatch({type: SET_THEME, payload: theme})
   }, []);
 
-  console.log("Auth state: ", state)
+  if(process.env.NEXT_PUBLIC_ENV === "dev"){
+    console.log("Auth state: ", state)
+  }
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>

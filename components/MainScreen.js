@@ -1,12 +1,7 @@
 import React from "react";
 import { toMoney } from "../utils/toMoney";
-import { useCollection } from "../hooks/useCollection";
-import { useAuthContext } from "../hooks/useAuthContext";
 
 function MainScreen() {
-  const {user} = useAuthContext()
-  const { documents } = useCollection("users/taQEvFeQ88BMgLA3CvbC/categories");
-  const { documents : users } = useCollection("users");
 
   return (
     <div className="w-full h-full flex flex-col justify-center">

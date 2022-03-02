@@ -6,26 +6,17 @@ import {
   HiOutlinePlusSm,
   HiOutlineHome,
 } from "react-icons/hi";
+import FormTransaction from "./FormTransaction";
 import ModalBottom from "./ModalBottom";
 
 function BottomNav() {
   const [isOpenTransaction, setOpenTransaction] = useState(false)
 
-  function FormTransaction(){
-    return(
-      <form onSubmit={(e) => e.preventDefault()}>
-        <div className="flex flex-col justify-center">
-          <label className="label-theme">Tanggal</label>
-          <input type="date" name="date" className="form-input input-theme" />
-        </div>
-      </form>
-    )
-  }
   return (
     <div className="absolute bottom-0 w-full h-[84px] flex justify-around items-end pb-2 border-t border-violet-200/50 dark:border-neutral-700/50">
       <ModalBottom
         closeModal={() => setOpenTransaction(false)}
-        title="Add Transaction"
+        title="Tambah Transaksi"
         isOpen={isOpenTransaction}
         closeButton={true}
       >
