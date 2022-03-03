@@ -13,7 +13,7 @@ function BottomNav() {
   const [isOpenTransaction, setOpenTransaction] = useState(false)
 
   return (
-    <div className="absolute bottom-0 w-full h-[84px] flex justify-around items-end pb-2 border-t border-violet-200/50 dark:border-neutral-700/50">
+    <div className="fixed bottom-0 clear-left max-w-[448px] w-full h-[84px] flex justify-around items-end pb-2 bg-violet-100 dark:bg-neutral-800 border-t border-violet-200/50 dark:border-neutral-700/50">
       <ModalBottom
         closeModal={() => setOpenTransaction(false)}
         title="Tambah Transaksi"

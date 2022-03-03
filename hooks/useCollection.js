@@ -4,14 +4,16 @@ import { db } from "../firebase/config";
 
 function useCollection(name, _query) {
   const [documents, setDocuments] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const q = useRef(_query).current;
 
   useEffect(() => {
+    setLoading(true);
     let collectionRef = collection(db, name);
     if (q) {
       collectionRef = query(collectionRef, where(...q));
-      console.log("q =>", q)
+      console.log("q =>", q);
     }
 
     const unsub = onSnapshot(collectionRef, (snapshot) => {
@@ -19,6 +21,7 @@ function useCollection(name, _query) {
         id: doc.id,
         ...doc.data(),
       }));
+      setLoading(false);
       console.log("collectionDocs: " + name, collectionDocs);
       setDocuments(collectionDocs);
     });
@@ -26,7 +29,7 @@ function useCollection(name, _query) {
     return () => unsub();
   }, [name, _query]);
 
-  return { documents };
+  return { documents, loading };
 }
 
 export { useCollection };

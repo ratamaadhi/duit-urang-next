@@ -41,7 +41,7 @@ function Navbar() {
     logout(() => setIsopen(false))
   }
   return (
-    <div className="w-full h-12 px-4 flex justify-between items-center font-poppins border-b border-violet-400/25">
+    <div className="sticky z-10 top-0 w-full max-w-md mx-auto h-12 px-4 flex justify-between items-center bg-violet-100 dark:bg-neutral-800 font-poppins border-b border-violet-400/25">
       <ModalBottom
         isOpen={isOpen}
         closeModal={() => setIsopen(false)}

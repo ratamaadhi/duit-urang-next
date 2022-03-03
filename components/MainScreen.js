@@ -1,12 +1,18 @@
 import React from "react";
 import { toMoney } from "../utils/toMoney";
+import ListTransactions from "./ListTransactions";
+import { useCollection } from "../hooks/useCollection";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function MainScreen() {
+  const { user } = useAuthContext();
+  const { documents: allTransactions, loading } = useCollection(`users/${user.uid}/transactions`);
 
+  console.log("allTransactions", allTransactions)
   return (
-    <div className="w-full h-full flex flex-col justify-center">
+    <div className="w-full pb-[84px]">
       {/* BALANCE */}
-      <div className="w-full h-full px-4 py-2 flex justify-between items-center rounded-2xl bg-violet-300 dark:text-violet-800 shadow-xl shadow-violet-200 dark:shadow-neutral-900/50">
+      <div className="w-full h-24 px-4 py-2 flex justify-between items-center rounded-2xl bg-violet-300 dark:text-violet-800 shadow-xl shadow-violet-200 dark:shadow-neutral-900/50">
         <div>
           <h1 className="font-semibold text-sm leading-relaxed tracking-wide">
             Your balance
@@ -23,6 +29,8 @@ function MainScreen() {
         </div>
       </div>
       {/* // BALANCE */}
+
+      <ListTransactions transactions={allTransactions} loading={loading}/>
     </div>
   );
 }
