@@ -13,13 +13,13 @@ const firebaseConfig = {
 };
 
 // init app
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 // init firestore
-const db = getFirestore(app);
+const db = getFirestore();
 
 // init auth
-const auth = getAuth(app)
+const auth = getAuth()
 
 // timestamp
 const timestamp = Timestamp;

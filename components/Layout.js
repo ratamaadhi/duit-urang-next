@@ -6,7 +6,7 @@ function Layout({ children }) {
   const { authIsReady, user } = useAuthContext();
   return (
     <>
-      <div className="relative antialiased w-md max-w-md mx-auto min-h-full h-screen bg-violet-100 dark:bg-neutral-800 text-violet-900 dark:text-violet-300 font-poppins">
+      <div className="relative antialiased w-md max-w-md mx-auto min-h-full h-screen bg-violet-100 dark:bg-neutral-800 text-violet-900 dark:text-violet-300 font-poppins overflow-y-scroll">
         {authIsReady && (
           <>
             <Navbar />
