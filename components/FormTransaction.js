@@ -9,7 +9,8 @@ import {
 import { timestamp } from "../firebase/config";
 import { useFirestore } from "../hooks/useFirestore";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { toMoney } from "../utils/toMoney";
+// import { toMoney } from "../utils/toMoney";
+import { toast, Slide } from "react-toastify";
 
 const kategoriOptions = [
   {
@@ -34,11 +35,11 @@ function FormTransaction() {
   const [selectedKategori, setSelectedKategori] = useState({ id: 0, name: "" });
   const [query, setQuery] = useState("");
 
-  const { user } = useAuthContext();
+  const { user, theme } = useAuthContext();
 
   const {
-    addDocument,
-    response: { isPending, isSuccess, document },
+    addTransaction,
+    response: { isPending, isSuccess, document, error },
   } = useFirestore(`users/${user.uid}/transactions`);
 
   const filteredKategori =
@@ -53,14 +54,14 @@ function FormTransaction() {
 
   function handleAddTransaction(e) {
     e.preventDefault();
-    const doc = {
-      tanggal: timestamp.fromDate(new Date(tanggal)),
+      const doc = {
+      tanggal: timestamp.fromMillis(new Date(tanggal).getTime()),
       jenis,
       deskripsi,
       kategori: selectedKategori,
       amount,
     };
-    addDocument(doc);
+    addTransaction(user, doc);
   }
 
   useEffect(() => {
@@ -69,9 +70,28 @@ function FormTransaction() {
       setDeskripsi("");
       setJenis("expense");
       setSelectedKategori({ id: 0, name: "" });
-      setTanggal("");
+      toast.success('Transaksi berhasil.', {
+        position: "top-center",
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Slide,
+        theme: theme,
+        autoClose: 3500,
+      });
     }
-  }, [isSuccess]);
+    if(error){
+      toast.error(error, {
+        position: "top-center",
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Slide,
+        theme: theme,
+        autoClose: 3500,
+      });
+    }
+  }, [isSuccess, error]);
 
   return (
     <form onSubmit={handleAddTransaction} className="space-y-4 mt-4">

@@ -1,19 +1,33 @@
 import { useEffect, useRef, useState } from "react";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../firebase/config";
 
-function useCollection(name, _query) {
+function useCollection({ name, _query, _orderBy }) {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const q = useRef(_query).current;
+  const o = useRef(_orderBy).current;
 
   useEffect(() => {
     setLoading(true);
     let collectionRef = collection(db, name);
     if (q) {
       collectionRef = query(collectionRef, where(...q));
-      console.log("q =>", q);
+    }
+
+    if (o) {
+      collectionRef = query(collectionRef, orderBy(...o));
+    }
+
+    if (q && o) {
+      collectionRef = query(collectionRef, where(...q), orderBy(...o));
     }
 
     const unsub = onSnapshot(collectionRef, (snapshot) => {
@@ -22,12 +36,12 @@ function useCollection(name, _query) {
         ...doc.data(),
       }));
       setLoading(false);
-      console.log("collectionDocs: " + name, collectionDocs);
+      console.table(collectionDocs);
       setDocuments(collectionDocs);
     });
 
     return () => unsub();
-  }, [name, _query]);
+  }, [name, q, o]);
 
   return { documents, loading };
 }

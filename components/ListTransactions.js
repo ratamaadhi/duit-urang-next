@@ -13,7 +13,7 @@ function ListTransactions({ transactions = [], header }) {
       <h1 className="mb-2 leading-relaxed tracking-wide font-poppins font-semibold">
         Transactions
       </h1>
-      <div className="w-full h-[calc(100vh-(80px+34px))] pb-[86px] overflow-y-scroll">
+      <div className="w-full h-[calc(100vh-(80px+34px))] pb-[86px] overflow-y-scroll dark:text-violet-800">
         {transactions.length ? (
           transactions.map((tr) => (
             <div
@@ -31,7 +31,7 @@ function ListTransactions({ transactions = [], header }) {
                       )}
                     </span>
                   </div>
-                  <div className="w-full flex flex-col justify-between items-start dark:text-violet-800">
+                  <div className="w-full flex flex-col justify-between items-start">
                     <div className="w-full flex justify-between items-center mb-2">
                       <span className="text-xs font-semibold tracking-wide px-1 rounded bg-violet-200">
                         {tr.kategori.name}
@@ -42,7 +42,7 @@ function ListTransactions({ transactions = [], header }) {
                             "Do MMM YYYY"
                           )}
                         </p>
-                        <div className="text-xl dark:text-violet-800 px-1">
+                        <div className="text-xl px-1">
                           <HiOutlineDotsHorizontal />
                         </div>
                       </div>
@@ -57,7 +57,7 @@ function ListTransactions({ transactions = [], header }) {
             </div>
           ))
         ) : (
-          <div className="w-full h-12 bg-violet-300"></div>
+          <div className="w-full h-12 flex justify-center items-center rounded-lg bg-violet-300 shadow-md shadow-violet-300/50 dark:shadow-neutral-900">No transaction yet</div>
         )}
       </div>
     </div>

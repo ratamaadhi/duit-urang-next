@@ -5,6 +5,7 @@ import {
   initialState,
   firestoreReducer,
 } from "../context/firestore/firestoreReducer";
+import { addTransactions } from "../middleware/transactions.middleware";
 
 export function useFirestore(collectionName) {
   const [response, dispatch] = useReducer(firestoreReducer, initialState);
@@ -41,9 +42,13 @@ export function useFirestore(collectionName) {
   // delete a document
   const deleteDocument = () => {};
 
+  // add transactions
+  const addTransaction = (user, docTransaction) =>
+    addTransactions({ user, docTransaction, dispatch: dispatchIfNotCancelled });
+
   useEffect(() => {
     return () => setCancelled(true);
   }, []);
 
-  return { addDocument, deleteDocument, response };
+  return { addDocument, deleteDocument, addTransaction, response };
 }
